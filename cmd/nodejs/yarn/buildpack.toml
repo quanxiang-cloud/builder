@@ -1,0 +1,9 @@
+api = "0.7"
+
+[buildpack]
+id = "openfunction.nodejs.yarn"
+version = "0.6.0"
+name = "Node.js - Yarn"
+
+[[stacks]]
+id = "openfunction.node16"

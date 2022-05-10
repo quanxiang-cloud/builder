@@ -1,0 +1,70 @@
+api = "0.7"
+
+[buildpack]
+id = "google.utils.label"
+version = "0.0.1"
+name = "Utils - Label Image"
+
+[[stacks]]
+id = "google"
+
+[[stacks]]
+id = "google.dotnet3"
+
+[[stacks]]
+id = "openfunction.go115"
+
+[[stacks]]
+id = "openfunction.go116"
+
+[[stacks]]
+id = "google.java11"
+
+[[stacks]]
+id = "google.nodejs10"
+
+[[stacks]]
+id = "google.nodejs12"
+
+[[stacks]]
+id = "google.nodejs14"
+
+[[stacks]]
+id = "google.nodejs16"
+
+[[stacks]]
+id = "openfunction.node16"
+
+[[stacks]]
+id = "google.php72"
+
+[[stacks]]
+id = "google.php73"
+
+[[stacks]]
+id = "google.php74"
+
+[[stacks]]
+id = "google.python37"
+
+[[stacks]]
+id = "google.python38"
+
+[[stacks]]
+id = "google.python39"
+
+[[stacks]]
+id = "google.ruby25"
+
+[[stacks]]
+id = "google.ruby26"
+
+[[stacks]]
+id = "google.ruby27"
+
+[[stacks]]
+id = "openfunction.ruby26"
+
+[types]
+build = true
+launch = true

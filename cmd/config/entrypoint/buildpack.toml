@@ -1,0 +1,21 @@
+api = "0.7"
+
+[buildpack]
+id = "google.config.entrypoint"
+version = "0.9.0"
+name = "Config - Entrypoint"
+
+[[stacks]]
+id = "google"
+
+[[stacks]]
+id = "openfunction.ruby26"
+
+[[stacks]]
+id = "openfunction.go115"
+
+[[stacks]]
+id = "openfunction.go116"
+
+[[stacks]]
+id = "openfunction.node16"

@@ -1,0 +1,73 @@
+# Defines a set of groups for builders that support particular language runtimes
+licenses(["notice"])
+
+exports_files(
+    ["testdata"],
+)
+
+package_group(
+    name = "cpp_builders",
+    packages = [
+        "//builders/base",
+    ],
+)
+
+package_group(
+    name = "dotnet_builders",
+    packages = [
+        "//builders/base",
+    ],
+)
+
+package_group(
+    name = "go_builders",
+    packages = [
+        "//builders/base",
+        "//builders/go115",
+        "//builders/go116",
+    ],
+)
+
+package_group(
+    name = "java_builders",
+    packages = [
+        "//builders/base",
+        "//builders/java11",
+    ],
+)
+
+package_group(
+    name = "nodejs_builders",
+    packages = [
+        "//builders/base",
+        "//builders/node10",
+        "//builders/node12",
+        "//builders/node14",
+        "//builders/node16",
+    ],
+)
+
+package_group(
+    name = "php_builders",
+    packages = [
+        "//builders/base",
+    ],
+)
+
+package_group(
+    name = "python_builders",
+    packages = [
+        "//builders/base",
+        "//builders/py37",
+        "//builders/py38",
+        "//builders/py39",
+    ],
+)
+
+package_group(
+    name = "ruby_builders",
+    packages = [
+        "//builders/base",
+        "//builders/ruby26",
+    ],
+)

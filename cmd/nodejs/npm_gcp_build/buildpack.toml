@@ -1,0 +1,9 @@
+api = "0.7"
+
+[buildpack]
+id = "openfunction.nodejs.npm-gcp-build"
+version = "0.6.0"
+name = "Node.js - NPM gcp-build"
+
+[[stacks]]
+id = "openfunction.node16"
