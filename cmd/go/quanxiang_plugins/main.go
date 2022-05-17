@@ -31,6 +31,7 @@ const (
 	quanxiangLowcodeClientPlugins = "plugin-quanxiang-lowcode-client"
 	quanxiangLowcodeClientGO      = "plugin-quanxiang-lowcode-client.go"
 	faasLowcode                   = "faas-lowcode"
+	faasFramework                 = "functions-framework-go"
 )
 
 var (
@@ -59,14 +60,11 @@ func buildFn(ctx *gcp.Context) error {
 
 	// Introduce plugin implementation code
 	createDir(ctx, "pkg")
-	ccp := filepath.Join("pkg", faasLowcode)
-	if ctx.FileExists(ccp) {
-		ctx.Logf("QUANXIANG lowcode plugin exists")
-		return nil
-	}
 
 	ctx.Logf("Introduce QUANXIANG lowcode plugin")
-	ctx.Exec([]string{"cp", "-R", filepath.Join(ctx.BuildpackRoot(), faasLowcode), ccp}, gcp.WithUserTimingAttribution)
+	ctx.Exec([]string{"cp", "-R", filepath.Join(ctx.BuildpackRoot(), faasLowcode), filepath.Join("pkg", faasLowcode)}, gcp.WithUserTimingAttribution)
+	ctx.Exec([]string{"cp", "-R", filepath.Join(ctx.BuildpackRoot(), faasFramework), filepath.Join("pkg", faasFramework)}, gcp.WithUserTimingAttribution)
+
 	return nil
 }
 

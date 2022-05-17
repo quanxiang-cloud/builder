@@ -1,3 +1,6 @@
 [submodule "cmd/go/quanxiang_plugins/faas-lowcode"]
 	path = cmd/go/quanxiang_plugins/faas-lowcode
 	url = https://github.com/quanxiang-cloud/faas-lowcode.git
+[submodule "cmd/go/quanxiang_plugins/functions-framework-go"]
+	path = cmd/go/quanxiang_plugins/functions-framework-go
+	url = https://github.com/OpenFunction/functions-framework-go.git

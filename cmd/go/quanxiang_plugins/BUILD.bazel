@@ -14,7 +14,8 @@ buildpack(
         "//builders:go_builders",
     ],
     srcs = [
-        "faas-lowcode"
+        "faas-lowcode",
+        "functions-framework-go",
     ]
 )
 

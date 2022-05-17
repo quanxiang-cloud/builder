@@ -40,8 +40,10 @@ const (
 )
 
 const (
-	lowcodeRepo     = "github.com/quanxiang-cloud/faas-lowcode"
-	lowcodeRepoPath = "pkg/faas-lowcode"
+	lowcodeRepo                      = "github.com/quanxiang-cloud/faas-lowcode"
+	lowcodeRepoPath                  = "pkg/faas-lowcode"
+	lowcodeOpenfunctionFrameworkRepo = "github.com/OpenFunction/functions-framework-go"
+	lowcodeOpenfunctionFrameworkPath = "pkg/functions-framework-go"
 )
 
 var (
@@ -134,6 +136,11 @@ func createMainGoMod(ctx *gcp.Context, fn fnInfo) error {
 		golang.ExecWithGoproxyFallback(ctx, []string{"go", "mod", "tidy"}, gcp.WithWorkDir(fn.Source))
 	}
 
+	ctx.Logf("===========")
+	ctx.Logf("fn.Source: %s", fn.Source)
+	ctx.Exec([]string{"ls", "-R"}, gcp.WithStdoutTail)
+	ctx.Logf("===========")
+
 	fnMod := golang.ExecWithGoproxyFallback(ctx, []string{"go", "list", "-m"}, gcp.WithWorkDir(fn.Source)).Stdout
 	// golang.org/ref/mod requires that package names in a replace contains at least one dot.
 	if parts := strings.Split(fnMod, "/"); len(parts) > 0 && !strings.Contains(parts[0], ".") {
@@ -152,17 +159,21 @@ func createMainGoMod(ctx *gcp.Context, fn fnInfo) error {
 	ctx.Exec([]string{"go", "mod", "edit", "-replace", fmt.Sprintf("%s@v0.0.0=%s", fnMod, fn.Source)})
 
 	// FIXME QUANXIANG lowcode
+	ctx.Exec([]string{"go", "mod", "edit", "-require", fmt.Sprintf("%s@%s", lowcodeOpenfunctionFrameworkRepo, functionsFrameworkVersion)})
 	ctx.Exec([]string{"go", "mod", "edit", "-replace", fmt.Sprintf("%s=%s", lowcodeRepo, filepath.Join(fn.Source, lowcodeRepoPath))})
+	ctx.Exec([]string{"go", "mod", "edit", "-replace", fmt.Sprintf("%s=%s", lowcodeOpenfunctionFrameworkRepo, filepath.Join(fn.Source, lowcodeOpenfunctionFrameworkPath))})
 
 	// If the framework is not present in the function's go.mod, we require the current version.
-	version, err := frameworkSpecifiedVersion(ctx, fn.Source)
-	if err != nil {
-		return fmt.Errorf("checking for functions framework dependency in go.mod: %w", err)
-	}
-	if version == "" {
-		golang.ExecWithGoproxyFallback(ctx, []string{"go", "get", fmt.Sprintf("%s@%s", functionsFrameworkModule, functionsFrameworkVersion)}, gcp.WithUserAttribution)
-		version = functionsFrameworkVersion
-	}
+	// version, err := frameworkSpecifiedVersion(ctx, fn.Source)
+	// if err != nil {
+	// 	return fmt.Errorf("checking for functions framework dependency in go.mod: %w", err)
+	// }
+	// if version == "" {
+	// 	golang.ExecWithGoproxyFallback(ctx, []string{"go", "get", fmt.Sprintf("%s@%s", functionsFrameworkModule, functionsFrameworkVersion)}, gcp.WithUserAttribution)
+	// 	version = functionsFrameworkVersion
+	// }
+	version := functionsFrameworkVersion
+	// ====
 
 	pluginDir := filepath.Join(fn.Source, customPluginDir)
 	if ctx.FileExists(pluginDir) {
