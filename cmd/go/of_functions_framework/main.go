@@ -136,11 +136,6 @@ func createMainGoMod(ctx *gcp.Context, fn fnInfo) error {
 		golang.ExecWithGoproxyFallback(ctx, []string{"go", "mod", "tidy"}, gcp.WithWorkDir(fn.Source))
 	}
 
-	ctx.Logf("===========")
-	ctx.Logf("fn.Source: %s", fn.Source)
-	ctx.Exec([]string{"ls", "-R"}, gcp.WithStdoutTail)
-	ctx.Logf("===========")
-
 	fnMod := golang.ExecWithGoproxyFallback(ctx, []string{"go", "list", "-m"}, gcp.WithWorkDir(fn.Source)).Stdout
 	// golang.org/ref/mod requires that package names in a replace contains at least one dot.
 	if parts := strings.Split(fnMod, "/"); len(parts) > 0 && !strings.Contains(parts[0], ".") {
