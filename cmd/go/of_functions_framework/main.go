@@ -121,6 +121,8 @@ func buildFn(ctx *gcp.Context) error {
 		}
 	}
 
+	ctx.Logf("env %s", "test")
+
 	ctx.AddWebProcess([]string{golang.OutBin})
 	return nil
 }
